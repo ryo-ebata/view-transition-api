@@ -95,11 +95,17 @@
 					const to = e.currentTarget.dataset.to;
 
 					// ページを切り替える
-					document.startViewTransition(() => {
+					if (typeof document.startViewTransition === 'function') {
+						document.startViewTransition(() => {
+							document.querySelectorAll('[data-page]').forEach((page) => {
+								page.hidden = to !== page.dataset.page;
+							});
+						});
+					} else {
 						document.querySelectorAll('[data-page]').forEach((page) => {
 							page.hidden = to !== page.dataset.page;
 						});
-					});
+					}
 				});
 			});
 		</script>
